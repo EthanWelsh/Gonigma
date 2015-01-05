@@ -4,11 +4,12 @@ import (
 	"fmt"
 	"io/ioutil"
 	"strings"
+	"unicode"
 )
 
 type Rotor struct {
 	position int
-	contacts []byte
+	contacts []rune
 }
 
 func (Rotor) NewRotor(file string) Rotor {
@@ -26,10 +27,10 @@ func (Rotor) NewRotor(file string) Rotor {
 	s := string(message[:])
 	split := strings.Split(s, "\n")
 
-	r.contacts = make([]byte, len(split))
+	r.contacts = make([]rune, len(split))
 
 	for i := range split {
-		r.contacts[i] = byte([]rune(split[i])[0])
+		r.contacts[i] = rune([]rune(split[i])[0])
 	}
 
 	r.position = 0
@@ -37,9 +38,15 @@ func (Rotor) NewRotor(file string) Rotor {
 	return r
 }
 
+func (r Rotor) translate(c rune) (ret rune) {
+
+	c = unicode.ToUpper(c)
+	indexInRotor := c - 'A'
+	return r.contacts[indexInRotor]
+}
+
 /*
 TODO IMPLEMENT
-char translate(char c)
 void setToPosition(int p)
 void rotateOnce()
 */
