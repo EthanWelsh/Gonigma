@@ -71,6 +71,10 @@ out/
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 
+.idea/
+Enigma.xcodeproj/
+
+
 # JIRA plugin
 atlassian-ide-plugin.xml
 
