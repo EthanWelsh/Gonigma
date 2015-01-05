@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"strings"
 )
 
 type Rotor struct {
@@ -10,28 +11,35 @@ type Rotor struct {
 	contacts []byte
 }
 
-func (Rotor) newRotor(file string) Rotor {
+func (Rotor) NewRotor(file string) Rotor {
 
 	var err error
+	var r Rotor
 
 	message, err := ioutil.ReadFile(file) // Read the message from the message file
 
 	if err != nil {
-		print("Error reading from file!!!")
+		fmt.Println("Error reading from file!!!")
+		fmt.Println(err)
 	}
 
-	fmt.Println(message)
+	s := string(message[:])
+	split := strings.Split(s, "\n")
 
-	var r Rotor
+	r.contacts = make([]byte, len(split))
+
+	for i := range split {
+		r.contacts[i] = byte([]rune(split[i])[0])
+	}
+
+	r.position = 0
 
 	return r
 }
 
-/*Rotor(const char *rotor_file);
-char translate(char c);
-void setToPosition(int p);
-void rotateOnce();
-
-private:
-int position;
-char contacts[];*/
+/*
+TODO IMPLEMENT
+char translate(char c)
+void setToPosition(int p)
+void rotateOnce()
+*/
