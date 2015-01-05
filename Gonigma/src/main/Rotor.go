@@ -12,10 +12,10 @@ type Rotor struct {
 	contacts []rune
 }
 
-func (Rotor) NewRotor(file string) Rotor {
+// reads a rotor file from the given path and returns a rotor of that configuration
+func (r Rotor) NewRotor(file string) Rotor {
 
 	var err error
-	var r Rotor
 
 	message, err := ioutil.ReadFile(file) // Read the message from the message file
 
@@ -38,15 +38,22 @@ func (Rotor) NewRotor(file string) Rotor {
 	return r
 }
 
-func (r Rotor) translate(c rune) (ret rune) {
+// given a character, will translate that character and return the translated character
+func (r *Rotor) Translate(c rune) (ret rune) {
 
 	c = unicode.ToUpper(c)
-	indexInRotor := c - 'A'
+
+	indexInRotor := (c - 'A' + rune(r.position)) % 26
 	return r.contacts[indexInRotor]
 }
 
-/*
-TODO IMPLEMENT
-void setToPosition(int p)
-void rotateOnce()
-*/
+// will set the rotor to a specific position
+func (r *Rotor) SetToPosition(position int) {
+	r.position = position
+}
+
+// rotates the rotor once and return if it is a kick (IE has it reached 26)
+func (r *Rotor) RotateOnce() (isKick bool) {
+	r.position = (r.position + 1) % 26
+	return r.position == 0
+}
