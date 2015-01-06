@@ -7,12 +7,12 @@ import (
 	"unicode"
 )
 
-type Reflector struct {
+type Plugboard struct {
 	plugs []rune
 }
 
 // reads a reflector file from the given path and returns a rotor of that configuration
-func (r Reflector) NewReflector(file string) Reflector {
+func (p Plugboard) NewPlugboard(file string) Plugboard {
 
 	var err error
 
@@ -26,20 +26,20 @@ func (r Reflector) NewReflector(file string) Reflector {
 	s := string(message[:])
 	split := strings.Split(s, "\n")
 
-	r.plugs = make([]rune, len(split))
+	p.plugs = make([]rune, len(split))
 
 	for i := range split {
-		r.plugs[i] = rune([]rune(split[i])[0])
+		p.plugs[i] = rune([]rune(split[i])[0])
 	}
 
-	return r
+	return p
 }
 
 // given a character, will translate that character and return the translated character
-func (r *Reflector) Translate(c rune) (ret rune) {
+func (p *Plugboard) Translate(c rune) (ret rune) {
 
 	c = unicode.ToUpper(c)
 
 	indexInRotor := c - 'A'
-	return r.plugs[indexInRotor]
+	return p.plugs[indexInRotor]
 }
