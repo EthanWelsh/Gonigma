@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"unicode"
+)
 
 type Machine struct {
 	plugboard Plugboard
@@ -53,9 +56,9 @@ func (m *Machine) translate(c rune) (ret rune) {
 }
 
 func (m *Machine) reset() {
-	m.r1.SetToPosition(1)
-	m.r2.SetToPosition(5)
-	m.r3.SetToPosition(3)
+	m.r1.SetToPosition(0)
+	m.r2.SetToPosition(0)
+	m.r3.SetToPosition(0)
 }
 
 func (m *Machine) translateString(s string) (message string) {
@@ -63,7 +66,14 @@ func (m *Machine) translateString(s string) (message string) {
 	msg := []byte(s)
 
 	for i := range msg {
-		message = message + string(m.translate(rune(msg[i])))
+
+		char := unicode.ToUpper(rune(msg[i]))
+
+		if char >= 'A' && char <= 'Z' {
+			message = message + string(m.translate(char))
+		} else {
+			message = message + string(char)
+		}
 	}
 
 	return
@@ -82,10 +92,10 @@ func main() {
 
 	enigma.reset()
 
-	fmt.Println(enigma.translateString("HELLOWORLD"))
+	fmt.Println(enigma.translateString("Hello World My Name Is Ethan"))
 
 	enigma.reset()
 
-	fmt.Println(enigma.translateString("LNZJSXLIGF"))
+	fmt.Println(enigma.translateString("EDHWZ AKMCT JQ LPOQ PK VWLMU"))
 
 }
