@@ -45,18 +45,23 @@ func (r *Rotor) Translate(c rune) (ret rune) {
 
 	indexInRotor := (c - 'A' + rune(r.position)) % 26
 
-	//fmt.Printf("INDEX IS %d\n", indexInRotor)
+	return r.contacts[indexInRotor]
+}
 
-	if indexInRotor < 0 {
-		fmt.Printf("C = %c\n", c)
-		fmt.Printf("%c - A = %d\n", c, c-'A')
-		fmt.Printf("POS: %d\n", rune(r.position))
-		fmt.Printf("index = %d", c-'A'+rune(r.position))
-		fmt.Printf("mod = %d", (c-'A'+rune(r.position))%26)
+func (r *Rotor) ReverseTranslate(c rune) (ret rune) {
 
+	var i rune
+
+	for i = 0; i < 26; i++ {
+
+		if r.contacts[i] == c {
+
+			ret = i + 'A'
+
+		}
 	}
 
-	return r.contacts[indexInRotor]
+	return
 }
 
 // will set the rotor to a specific position

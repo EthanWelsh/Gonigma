@@ -34,9 +34,9 @@ func (m *Machine) translate(c rune) (ret rune) {
 
 	ret = m.reflector.Translate(ret)
 
-	ret = m.r1.Translate(ret)
-	ret = m.r2.Translate(ret)
-	ret = m.r3.Translate(ret)
+	ret = m.r1.ReverseTranslate(ret)
+	ret = m.r2.ReverseTranslate(ret)
+	ret = m.r3.ReverseTranslate(ret)
 
 	ret = m.plugboard.Translate(ret)
 
@@ -77,6 +77,9 @@ func main() {
 	enigma.r1.SetToPosition(0)
 	enigma.r2.SetToPosition(0)
 	enigma.r3.SetToPosition(0)
+
+	fmt.Printf("%c\n", enigma.plugboard.Translate('G'))
+	fmt.Printf("%c\n", enigma.plugboard.Translate('W'))
 
 	fmt.Printf("----------T: %c\n", enigma.translate('T'))
 
