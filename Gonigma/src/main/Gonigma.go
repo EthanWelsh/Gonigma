@@ -52,6 +52,12 @@ func (m *Machine) translate(c rune) (ret rune) {
 	return
 }
 
+func (m *Machine) reset() {
+	m.r1.SetToPosition(1)
+	m.r2.SetToPosition(5)
+	m.r3.SetToPosition(3)
+}
+
 func (m *Machine) translateString(s string) (message string) {
 
 	msg := []byte(s)
@@ -74,19 +80,12 @@ func main() {
 		"/Users/welshej/github/Enigma/ConfigFiles/c.rotor",
 		"/Users/welshej/github/Enigma/ConfigFiles/r.reflector")
 
-	enigma.r1.SetToPosition(0)
-	enigma.r2.SetToPosition(0)
-	enigma.r3.SetToPosition(0)
+	enigma.reset()
 
-	fmt.Printf("%c\n", enigma.plugboard.Translate('G'))
-	fmt.Printf("%c\n", enigma.plugboard.Translate('W'))
+	fmt.Println(enigma.translateString("HELLOWORLD"))
 
-	fmt.Printf("----------T: %c\n", enigma.translate('T'))
+	enigma.reset()
 
-	enigma.r1.SetToPosition(0)
-	enigma.r2.SetToPosition(0)
-	enigma.r3.SetToPosition(0)
-
-	fmt.Printf("----------G: %c\n", enigma.translate('G'))
+	fmt.Println(enigma.translateString("LNZJSXLIGF"))
 
 }

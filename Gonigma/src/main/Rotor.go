@@ -56,7 +56,11 @@ func (r *Rotor) ReverseTranslate(c rune) (ret rune) {
 
 		if r.contacts[i] == c {
 
-			ret = i + 'A'
+			ret = i + 'A' - rune(r.position)
+
+			if ret < 'A' {
+				ret = 'Z' - ('A' - ret) + 1
+			}
 
 		}
 	}
