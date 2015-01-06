@@ -39,11 +39,23 @@ func (r Rotor) NewRotor(file string) Rotor {
 }
 
 // given a character, will translate that character and return the translated character
-func (r *Rotor) translate(c rune) (ret rune) {
+func (r *Rotor) Translate(c rune) (ret rune) {
 
 	c = unicode.ToUpper(c)
 
 	indexInRotor := (c - 'A' + rune(r.position)) % 26
+
+	//fmt.Printf("INDEX IS %d\n", indexInRotor)
+
+	if indexInRotor < 0 {
+		fmt.Printf("C = %c\n", c)
+		fmt.Printf("%c - A = %d\n", c, c-'A')
+		fmt.Printf("POS: %d\n", rune(r.position))
+		fmt.Printf("index = %d", c-'A'+rune(r.position))
+		fmt.Printf("mod = %d", (c-'A'+rune(r.position))%26)
+
+	}
+
 	return r.contacts[indexInRotor]
 }
 
@@ -53,14 +65,7 @@ func (r *Rotor) SetToPosition(position int) {
 }
 
 // rotates the rotor once and return if it is a kick (IE has it reached 26)
-func (r *Rotor) rotateOnce() (isKick bool) {
+func (r *Rotor) RotateOnce() (isKick bool) {
 	r.position = (r.position + 1) % 26
 	return r.position == 0
-}
-
-// will translate a character and then automatically rotate the rotor as well
-func (r *Rotor) TranslateAndRotateOnce(c rune) (ret rune, isKick bool) {
-	ret = r.translate(c)
-	isKick = r.rotateOnce()
-	return
 }

@@ -50,6 +50,6 @@ func (p *Plugboard) Translate(c rune) (ret rune) {
 
 	c = unicode.ToUpper(c)
 
-	indexInRotor := c - 'A'
-	return p.plugs[indexInRotor]
+	index := c - 'A'
+	return p.plugs[index]
 }
