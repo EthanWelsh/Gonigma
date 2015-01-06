@@ -17,7 +17,7 @@ func (r Rotor) NewRotor(file string) Rotor {
 
 	var err error
 
-	message, err := ioutil.ReadFile(file) // Read the message from the message file
+	message, err := ioutil.ReadFile(file)
 
 	if err != nil {
 		fmt.Println("Error reading from file!!!")
@@ -48,6 +48,7 @@ func (r *Rotor) Translate(c rune) (ret rune) {
 	return r.contacts[indexInRotor]
 }
 
+// given a letter, will return the letter which translates into this letter
 func (r *Rotor) ReverseTranslate(c rune) (ret rune) {
 
 	var i rune
