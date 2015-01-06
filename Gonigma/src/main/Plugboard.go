@@ -26,10 +26,20 @@ func (p Plugboard) NewPlugboard(file string) Plugboard {
 	s := string(message[:])
 	split := strings.Split(s, "\n")
 
-	p.plugs = make([]rune, len(split))
+	p.plugs = make([]rune, len(split)*2)
 
 	for i := range split {
-		p.plugs[i] = rune([]rune(split[i])[0])
+
+		pair := strings.Split(split[i], " ")
+
+		first := pair[0]
+		second := pair[1]
+
+		firstRune := ([]rune(first))[0]
+		secondRune := ([]rune(second))[0]
+
+		p.plugs[firstRune-'A'] = secondRune
+		p.plugs[secondRune-'A'] = firstRune
 	}
 
 	return p
