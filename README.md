@@ -1,5 +1,5 @@
 
-Enigma
+Gonigma
 ======
 
 This is an Enigma Machine emulator written in Go during my spare time.
