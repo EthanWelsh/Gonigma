@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"unicode"
 )
@@ -60,9 +61,9 @@ func (m *Machine) translate(c rune) (ret rune) {
 
 // resets a machine back to the base position
 func (m *Machine) reset() {
-	m.r1.SetToPosition(0)
-	m.r2.SetToPosition(0)
-	m.r3.SetToPosition(0)
+	m.r1.SetToPosition(I)
+	m.r2.SetToPosition(II)
+	m.r3.SetToPosition(III)
 }
 
 // given a string, will translate that string and return the encoded message
@@ -83,6 +84,19 @@ func (m *Machine) translateString(s string) (message string) {
 
 	return
 
+}
+
+var I int
+var II int
+var III int
+
+func init() {
+
+	flag.IntVar(&I, "I", 0, "Rotor I Position Setting")
+	flag.IntVar(&II, "II", 0, "Rotor II Position Setting")
+	flag.IntVar(&III, "III", 0, "Rotor III Position Setting")
+
+	flag.Parse()
 }
 
 func main() {
