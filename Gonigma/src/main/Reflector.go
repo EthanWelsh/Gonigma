@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
 	"strings"
 	"unicode"
 )
@@ -26,7 +27,12 @@ func (r Reflector) NewReflector(file string) Reflector {
 	s := string(message[:])
 	split := strings.Split(s, "\n")
 
-	r.slots = make([]rune, len(split)*2)
+	if len(split)*2 != 26 {
+		fmt.Println("Reflector file formatted incorrectly. Exiting program!")
+		os.Exit(0)
+	}
+
+	r.slots = make([]rune, 26)
 
 	for i := range split {
 

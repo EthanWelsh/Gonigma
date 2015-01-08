@@ -24,13 +24,12 @@ func (p Plugboard) NewPlugboard(file string) Plugboard {
 	}
 
 	s := string(message[:])
-	split := strings.Split(s, "\n")
+	plugPairs := strings.Split(s, "\n")
 
 	p.plugs = make([]rune, 26)
 
-	for i := range split {
-
-		pair := strings.Split(split[i], " ")
+	for i := range plugPairs {
+		pair := strings.Split(plugPairs[i], " ")
 
 		first := pair[0]
 		second := pair[1]

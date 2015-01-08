@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
 	"strings"
 	"unicode"
 )
@@ -17,20 +18,25 @@ func (r Rotor) NewRotor(file string) Rotor {
 
 	var err error
 
-	message, err := ioutil.ReadFile(file)
+	messageFromFile, err := ioutil.ReadFile(file)
 
 	if err != nil {
 		fmt.Println("Error reading from file!!!")
 		fmt.Println(err)
 	}
 
-	s := string(message[:])
-	split := strings.Split(s, "\n")
+	s := string(messageFromFile[:])
+	translationLetter := strings.Split(s, "\n")
 
-	r.contacts = make([]rune, len(split))
+	if len(translationLetter) != 26 {
+		fmt.Println("Rotor file ", file, " is formatted incorrectly. Exiting program!")
+		os.Exit(0)
+	}
 
-	for i := range split {
-		r.contacts[i] = rune([]rune(split[i])[0])
+	r.contacts = make([]rune, len(translationLetter))
+
+	for i := range translationLetter {
+		r.contacts[i] = rune([]rune(translationLetter[i])[0])
 	}
 
 	r.position = 0
@@ -47,11 +53,8 @@ func (r *Rotor) Translate(c rune) (ret rune) {
 
 // given a letter, will return the letter which translates into this letter
 func (r *Rotor) ReverseTranslate(c rune) (ret rune) {
-
 	var i rune
-
 	for i = 0; i < 26; i++ {
-
 		if r.contacts[i] == c {
 			ret = i + 'A' - rune(r.position)
 
@@ -60,7 +63,6 @@ func (r *Rotor) ReverseTranslate(c rune) (ret rune) {
 			}
 		}
 	}
-
 	return
 }
 
