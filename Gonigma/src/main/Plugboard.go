@@ -26,7 +26,7 @@ func (p Plugboard) NewPlugboard(file string) Plugboard {
 	s := string(message[:])
 	split := strings.Split(s, "\n")
 
-	p.plugs = make([]rune, len(split)*2)
+	p.plugs = make([]rune, 26)
 
 	for i := range split {
 
@@ -42,6 +42,11 @@ func (p Plugboard) NewPlugboard(file string) Plugboard {
 		p.plugs[secondRune-'A'] = firstRune
 	}
 
+	for i := range p.plugs {
+		if p.plugs[i] == 0 { // If a letter isn't mapped to another on the plugboard, map it to itself
+			p.plugs[i] = rune(i) + 'A'
+		}
+	}
 	return p
 }
 
