@@ -40,11 +40,8 @@ func (r Rotor) NewRotor(file string) Rotor {
 
 // given a character, will translate that character and return the translated character
 func (r *Rotor) Translate(c rune) (ret rune) {
-
 	c = unicode.ToUpper(c)
-
 	indexInRotor := (c - 'A' + rune(r.position)) % 26
-
 	return r.contacts[indexInRotor]
 }
 
@@ -56,13 +53,11 @@ func (r *Rotor) ReverseTranslate(c rune) (ret rune) {
 	for i = 0; i < 26; i++ {
 
 		if r.contacts[i] == c {
-
 			ret = i + 'A' - rune(r.position)
 
 			if ret < 'A' {
 				ret = 'Z' - ('A' - ret) + 1
 			}
-
 		}
 	}
 
