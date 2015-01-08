@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
+	"os"
 	"unicode"
 )
 
@@ -111,10 +113,10 @@ func main() {
 
 	enigma.reset()
 
-	fmt.Println(enigma.translateString("Hello World!"))
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("Enter the text to translate: ")
+	text, _ := reader.ReadString('\n')
 
-	enigma.reset()
-
-	fmt.Println(enigma.translateString("EDHWZ AKMCT!"))
+	fmt.Println(enigma.translateString(string(text)))
 
 }
